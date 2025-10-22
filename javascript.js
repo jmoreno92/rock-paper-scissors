@@ -17,14 +17,28 @@ function getComputerChoice() {
         computerChoice = ""
     }
 
+    console.log(randNum);  // Added as part of debugging
+
     return computerChoice
 }
 
 
 // Get human choice
 function getHumanChoice() {
+    const validChoices = ["rock", "paper", "scissors"];
+    let humanChoice = "";
 
+    while (true) {
+        humanChoice = prompt("Choose wisely: rock, paper or scissors").toLowerCase().trim()
+
+        if (validChoices.includes(humanChoice)) {
+            return humanChoice;
+        } else {
+            alert("Invalid choice! Try again...")
+        }
+    }
 }
+// if option is not valid, prompt again.
 
 
 // Declare players score variables
@@ -35,10 +49,10 @@ function playRound(humanChoice, computerChoice) {
     // your code here!
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+// const humanSelection = getHumanChoice();
+// const computerSelection = getComputerChoice();
 
-playRound(humanSelection, computerSelection);
+// playRound(humanSelection, computerSelection);
 
 
 
@@ -59,6 +73,29 @@ function showMessage() {
 
 
 let randomNumber = Math.floor(Math.random() * 3) + 1;
-console.log(randomNumber);  // Added as part of debugging
+
 
 console.log(getComputerChoice())
+
+console.log(getHumanChoice())
+
+
+
+
+
+const playButton = document.querySelector("#Button");
+const log = document.querySelector("#log");
+
+playButton.addEventListener("click", () => {
+    let sign = prompt("What's your sign?");
+
+    if (sign === null) {
+        log.innerText = "OK, maybe next time.";
+    } else if (sign.toLowerCase() === "") {
+        log.innerText = "Don't be shy, enter your sign!";
+    } else if (sign.toLowerCase() === "scorpio") {
+        log.innerText = "Wow! I'm a Scorpio too!";
+    } else {
+        log.innerText = `${sign} is my favorite!`;
+    }
+});
