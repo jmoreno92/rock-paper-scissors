@@ -23,6 +23,7 @@ function getComputerChoice() {
 
     // console.log("Computer choice number:", randNum);  // Added as part of debugging
     console.log(".  Computer choice:", computerChoice);
+    line(".  Computer choice:", computerChoice);
 
     return computerChoice
 }
@@ -39,6 +40,7 @@ function getHumanChoice() {
 
         if (validChoices.includes(humanChoice)) {   // if option is not valid, prompt again.
             console.log(".  Your choice:", humanChoice);
+            line(".  Your choice:", humanChoice);
             return humanChoice;
         } else {
             alert("Invalid choice! Try again...")
@@ -60,7 +62,7 @@ function capitalize(str) {
 
 // Logic to play entire game
 function playGame() {
-
+    clearLog();
 
 
     // Declare players score variables
@@ -74,20 +76,28 @@ function playGame() {
         // your code here!
         if (humanChoice === computerChoice) {
             console.log(".  It's a tie! Both of you chose", humanChoice);
+            line(".  It's a tie! Both of you chose", humanChoice);
+            alert("It's a tie! Both of you chose " + humanChoice);
         } else if (humanChoice === "rock" && computerChoice === "scissors" || humanChoice === "paper" && computerChoice === "rock" || humanChoice === "scissors" && computerChoice === "paper") {
             humanScore = humanScore + 1;
             console.log(".  You win!", capitalize(humanChoice), "beats", computerChoice);
+            line(".  You win!", capitalize(humanChoice), "beats", computerChoice);
+            alert("You win! " + capitalize(humanChoice) + " beats " + computerChoice);
         } else {
             computerScore = computerScore + 1;
             console.log(".  You lose!", capitalize(computerChoice), "beats", humanChoice);
+            line(".  You lose!", capitalize(computerChoice), "beats", humanChoice);
+            alert("You lose! " + capitalize(computerChoice) + " beats " + humanChoice);
         }
         console.log(".  Your score:", humanScore, "Computer score:", computerScore);
+        line(".  Your score:", humanScore, "Computer score:", computerScore);
     }
 
 
 
     for (let round = 1; round <= 5; round++) {
-        console.log("Round", round)
+        console.log("Round", round);
+        line("\n\nRound", round);
 
         const humanSelection = getHumanChoice();
         const computerSelection = getComputerChoice();
@@ -97,15 +107,42 @@ function playGame() {
 
     if (humanScore > computerScore) {
         console.log("FINAL RESULT: YOU WIN!");
+        line("\nFINAL RESULT: YOU WIN!");
     } else if (humanScore < computerScore) {
         console.log("FINAL RESULT: YOU LOSE!");
+        line("\nFINAL RESULT: YOU LOSE!");
     } else {
         console.log("FINAL RESULT: IT'S A TIE!");
+        line("\nFINAL RESULT: IT'S A TIE!");
     }
 }
 
 
 // // PLAY GAME (PER ORIGINAL INSTRUCTIONS)
-playGame();
+// playGame();
 
 
+// === Helpers to write to the page ===
+const logEl = document.querySelector("#log");
+function clearLog() {
+    logEl.textContent = "";
+}
+function line(...parts) {
+    const div = document.createElement("div");
+    div.textContent = parts.join(" ");
+    logEl.appendChild(div);
+}
+
+// Add functionality as a button
+
+const playButton = document.querySelector("#Button");
+
+playButton.addEventListener("click", () => {
+    // Prevent double-clicks while the prompts are open
+    playButton.disabled = true;
+    try {
+        playGame();
+    } finally {
+        playButton.disabled = false;
+    }
+});
